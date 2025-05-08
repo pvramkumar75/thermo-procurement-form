@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PO Entry Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-2xl">
+    <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700">Thermo Procurement Entry</h2>
+    <form id="poForm" class="space-y-6">
+      <div>
+        <label class="block text-gray-700 font-medium">PO Number</label>
+        <input type="text" name="po_number" required class="w-full border border-gray-300 rounded-lg p-3 mt-1" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium">Date</label>
+        <input type="date" name="date" required class="w-full border border-gray-300 rounded-lg p-3 mt-1" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium">Supplier Name</label>
+        <input type="text" name="supplier_name" required class="w-full border border-gray-300 rounded-lg p-3 mt-1" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium">Item</label>
+        <input type="text" name="item" required class="w-full border border-gray-300 rounded-lg p-3 mt-1" />
+      </div>
+      <div>
+        <label class="block text-gray-700 font-medium">Special Note</label>
+        <textarea name="special_note" rows="3" class="w-full border border-gray-300 rounded-lg p-3 mt-1"></textarea>
+      </div>
+      <div>
+        <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700">Submit</button>
+      </div>
+      <p id="status" class="text-center text-sm text-gray-600 mt-2"></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('poForm');
+    const status = document.getElementById('status');
+    const WEB_APP_URL = 'https://script.google.com/macros/s/1YiS9rzcWOdyQka8rBIywfjflH2qLTi9fzPVUs3dK8kA/exec';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Submitting...';
+
+      const formData = new FormData(form);
+      const data = {
+        po_number: formData.get('po_number'),
+        date: formData.get('date'),
+        supplier_name: formData.get('supplier_name'),
+        item: formData.get('item'),
+        special_note: formData.get('special_note'),
+        timestamp: new Date().toLocaleString()
+      };
+
+      try {
+        await fetch(WEB_APP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        status.textContent = '✅ Submitted successfully!';
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        status.textContent = '❌ Submission failed. Try again.';
+      }
+    });
+  </script>
+</body>
+</html>
