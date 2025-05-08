@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PO Entry Form</title>
+  <title>Thermo Procurement Entry</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
@@ -39,7 +39,8 @@
   <script>
     const form = document.getElementById('poForm');
     const status = document.getElementById('status');
-    const WEB_APP_URL = 'https://script.google.com/macros/s/1YiS9rzcWOdyQka8rBIywfjflH2qLTi9fzPVUs3dK8kA/exec';
+
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwot8RNZpanaenAN_a7L7P5zDDIuuec2q3NKhoK-UXxRLjQBYmhA77tsSu_X5eA-PAa/exec';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -67,7 +68,7 @@
         form.reset();
       } catch (err) {
         console.error(err);
-        status.textContent = '❌ Submission failed. Try again.';
+        status.textContent = '❌ Submission failed. Please try again.';
       }
     });
   </script>
